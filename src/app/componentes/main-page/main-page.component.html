@@ -2,7 +2,10 @@
   <div class="container">
     <h1>Listado de Pokemon</h1>
     
-    <input class="search" placeholder="Buscar" [(ngModel)]="searchTerm" />
+    <div class="search-container">
+      <input class="search" placeholder="Buscar" [(ngModel)]="searchTerm" />
+      <button class="ButonAdd" (click)=" AddPokemon()" mat-button><mat-icon>add</mat-icon> <span>Agregar Pokemon</span></button>
+    </div>
 
     <ng-template  #loading >
       <div class="loading">
@@ -33,8 +36,8 @@
     </div>
 
     <div class="nav-buttons">
-      <button class="btn back" (click)="prevPage()" [disabled]="currentPage === 0"> < Atras</button>
-      <button class="btn next"(click)="nextPage(totalItems)" 
+      <button class="btn back" (click)="prevPage()"   [ngClass]="{ 'disabled': currentPage === 0 }"[disabled]="currentPage === 0"> < Atras</button>
+      <button class="btn next"(click)="nextPage(totalItems)"    [ngClass]="{ 'disabled': (currentPage + 1) * itemsPerPage >= totalItems }"
       [disabled]="(currentPage + 1) * itemsPerPage >= totalItems">Siguiente ></button>
     </div>
   </div>
