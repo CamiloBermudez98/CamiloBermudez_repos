@@ -11,6 +11,7 @@ export class SpecificPokemonComponent {
   @Input() spriteKeys : any = {}
   showAllMoves: boolean = false;
   maxMovesToShow: number = 7;
-  
+  ngOnInit(): void {
+  }
  
 }

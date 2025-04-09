@@ -1,31 +1,41 @@
 <div class="details">
-  <div class="main-info">
-    <img [src]="PokemonSelected.sprites.front_default">
-    <span>#{{ PokemonSelected.order }}</span>
-    <p><strong>{{ PokemonSelected.name }}</strong></p>
-  </div>
-  <p>
-    <strong class="subTittles">Types:</strong><br>
-    <span *ngFor="let t of PokemonSelected.types; let last = last">
-      {{ t.type.name }}<span *ngIf="!last">, </span>
-    </span>
-  </p>
-    <p><strong class="subTittles">Peso:</strong><br>{{PokemonSelected.height}}Kg</p>
+  <ng-container *ngIf="PokemonSelected?.order; else emptyState">
+    <div class="main-info">
+      <img [src]="PokemonSelected?.sprites?.front_default" *ngIf="PokemonSelected?.sprites?.front_default">
+      <span>#{{ PokemonSelected.order }}</span>
+      <p><strong>{{ PokemonSelected.name }}</strong></p>
+    </div>
+
+    <p>
+      <strong class="subTittles">Types:</strong><br>
+      <span *ngFor="let t of PokemonSelected.types; let last = last">
+        {{ t.type.name }}<span *ngIf="!last">, </span>
+      </span>
+    </p>
+
+    <p><strong class="subTittles">Peso:</strong><br>{{ PokemonSelected.height }}Kg</p>
+
     <p><strong class="subTittles">Sprites:</strong></p>
     <div class="sprites">
       <div class="sprite" *ngFor="let key of spriteKeys">
         <img [src]="PokemonSelected.sprites[key]" [alt]="key">
       </div>
     </div>
+
     <p><strong class="subTittles">Movimientos:</strong></p>
     <span *ngFor="let moves of PokemonSelected.moves | slice:0:(showAllMoves ? PokemonSelected.moves.length : maxMovesToShow); let last = last">
       {{ $any(moves).move.name }}<span *ngIf="!last">, </span>
     </span>
-    
-    <!-- Botón Ver más / Ver menos -->
-    <div *ngIf="PokemonSelected.moves.length > maxMovesToShow">
+
+    <div *ngIf="PokemonSelected?.moves?.length > maxMovesToShow">
       <button (click)="showAllMoves = !showAllMoves" class="ver-mas">
         {{ showAllMoves ? '...Ver menos' : '...Ver más' }}
       </button>
     </div>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <!-- Si querés un mensaje, podés ponerlo aquí -->
+    <p class="no-data">Selecciona un Pokémon para ver los detalles.</p>
+  </ng-template>
 </div>
