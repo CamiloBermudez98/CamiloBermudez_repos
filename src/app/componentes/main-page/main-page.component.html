@@ -1,0 +1,41 @@
+
+  <div class="container">
+    <h1>Listado de Pokemon</h1>
+    
+    <input class="search" placeholder="Buscar" [(ngModel)]="searchTerm" />
+
+    <ng-template  #loading >
+      <div class="loading">
+      <section>
+        <div  class="pulsing">
+          <mat-spinner [diameter]="50" ></mat-spinner>
+        </div>
+        <p class="pulsing">Cargando...</p>
+      </section>
+    </div>  </ng-template> 
+    <div class="main"*ngIf="dataPokemons | async as response; else loading">
+      
+      <div class="pokemon-list">
+        <div class="card"
+             *ngFor="let item of (response | filterByName: searchTerm).slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage); let i = index "
+             [ngClass]="colors[i % colors.length]"
+             (click)="selectPokemon(item)">
+             <img [src]= "item.sprites.front_default">
+          <span>#{{ currentPage * itemsPerPage + i + 1 }}</span>
+          <p>{{ item.name }}</p>
+        </div>
+      </div>
+      <app-specific-pokemon 
+      class="pokemon-detail"
+      [PokemonSelected]="PokemonSelected"
+      [spriteKeys]="spriteKeys"
+      ></app-specific-pokemon> 
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn back" (click)="prevPage()" [disabled]="currentPage === 0"> < Atras</button>
+      <button class="btn next"(click)="nextPage(totalItems)" 
+      [disabled]="(currentPage + 1) * itemsPerPage >= totalItems">Siguiente ></button>
+    </div>
+  </div>
+
