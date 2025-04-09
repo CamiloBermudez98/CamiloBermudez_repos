@@ -1,0 +1,101 @@
+<div class="mat-dialog-content">
+  <form [formGroup]="pokemonForm" class="pokemon-form" >
+    <h2>Agregar Pokémon</h2>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>URL Imagen principal</mat-label>
+        <input matInput placeholder="https://imagenCharmander" formControlName="urlFrist" required />
+        <mat-error *ngIf="pokemonForm.get('urlFrist')?.hasError('required')">Debe ingresar los datos</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="charmander" formControlName="name" required />
+        <mat-error *ngIf="pokemonForm.get('name')?.hasError('required')">Ingresá al menos un tipo</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Peso (kg)</mat-label>
+        <input matInput formControlName="height"  (keypress)="onlyNumberInput($event)"/>
+      </mat-form-field>
+    </div>
+
+    <!-- Tipos -->
+    <div class="form-row">
+      <div class="tipos-tag-list">
+        <div class="tipo-tag" *ngFor="let tipo of tipos">
+          {{ tipo.type.name }}
+          <button type="button" (click)="removeTipo(tipo)">×</button>
+        </div>
+      </div>
+      <div class="full-width-inline">
+        <mat-form-field appearance="outline" class="inline-input">
+          <mat-label>Agregar tipo</mat-label>
+          <input matInput [formControl]="nuevoTipoControl" placeholder="Ej: fire" (keyup.enter)="agregarTipo()" />
+        </mat-form-field>
+        <button mat-icon-button type="button" class="ButonAdd" (click)="agregarTipo()" aria-label="Agregar tipo">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      
+    </div>
+
+    <!-- Movimientos -->
+    <div class="form-row">
+      <div class="tipos-tag-list">
+        <div class="tipo-tag" *ngFor="let tipo of Moves">
+          {{ tipo.move.name }}
+          <button type="button" (click)="removemov(tipo)">×</button>
+        </div>
+      </div>
+      <div class="full-width-inline">
+        <mat-form-field appearance="outline" class="inline-input">
+          <mat-label>Agregar Movimiento</mat-label>
+          <input matInput [formControl]="nuevomovesControl" placeholder="Ej: swords-dance" (keyup.enter)="agregarmov()" />
+        </mat-form-field>
+        <button mat-icon-button type="button" class="ButonAdd" (click)="agregarmov()" aria-label="Agregar movimiento">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    
+    </div>
+
+    <!-- Sprites -->
+    <div class="form-row">
+      <div class="tipos-tag-list">
+        <div class="tipo-tag" *ngFor="let key of objectKeys(sprites)">
+          <strong>{{ key }}:</strong> {{ sprites[key] }}
+          <button type="button" class="remove-btn" (click)="removeSprite(key)">×</button>
+        </div>
+      </div>
+      <div class="full-width-inline">
+        <mat-form-field appearance="outline" class="inline-input">
+          <mat-label>Nombre del sprite</mat-label>
+          <input matInput [formControl]="nuevospriteNameControl" placeholder="Ej: front_default" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="inline-input">
+          <mat-label>URL del sprite</mat-label>
+          <input matInput [formControl]="nuevospritefuntionControl" placeholder="Ej: https://..." (keyup.enter)="agregarsprite()" />
+        </mat-form-field>
+
+        <button mat-icon-button type="button" class="ButonAdd"  (click)="agregarsprite()" aria-label="Agregar sprite">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    
+    </div>
+    
+    <!-- Botón Guardar -->
+    <div class="form-buttons">
+      <button mat-raised-button color="primary"  (click)="cancelar()" class="btn back"type="submit">atras</button>
+      <button mat-raised-button color="primary" (click)="guardar()" class="btn next" type="submit" [disabled]="pokemonForm.invalid" [ngClass]="{ 'disabled': pokemonForm.invalid}">Guardar</button>
+    </div>
+  </form>
+</div>
