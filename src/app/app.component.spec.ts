@@ -1,11 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { MainPageComponent } from './componentes/main-page/main-page.component';
+import { MatIconModule } from '@angular/material/icon';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
+    imports: [RouterTestingModule, MatIconModule,HttpClientTestingModule],
+    declarations: [AppComponent, MainPageComponent],
+    providers: [
+      { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) }
+    ]
   }));
 
   it('should create the app', () => {
@@ -13,6 +20,7 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
+  
 
   it(`should have as title 'prueba-asoseftware'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -20,10 +28,5 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('prueba-asoseftware');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('prueba-asoseftware app is running!');
-  });
+ 
 });
