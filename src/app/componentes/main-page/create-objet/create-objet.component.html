@@ -36,7 +36,10 @@
           <mat-label>Agregar tipo</mat-label>
           <input matInput [formControl]="nuevoTipoControl" placeholder="Ej: fire" (keyup.enter)="agregarTipo()" />
         </mat-form-field>
-        <button mat-icon-button type="button" class="ButonAdd" (click)="agregarTipo()" aria-label="Agregar tipo">
+        <button mat-icon-button type="button" class="ButonAdd" (click)="agregarTipo()" aria-label="Agregar tipo"
+        [disabled]="nuevoTipoControl.invalid ||  !nuevoTipoControl.value "
+        [ngClass]="{ 'disabled': nuevoTipoControl.invalid || !nuevoTipoControl.value}"
+      >
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -57,7 +60,10 @@
           <mat-label>Agregar Movimiento</mat-label>
           <input matInput [formControl]="nuevomovesControl" placeholder="Ej: swords-dance" (keyup.enter)="agregarmov()" />
         </mat-form-field>
-        <button mat-icon-button type="button" class="ButonAdd" (click)="agregarmov()" aria-label="Agregar movimiento">
+        <button mat-icon-button type="button" class="ButonAdd" (click)="agregarmov()" aria-label="Agregar movimiento"
+        [disabled]="nuevomovesControl.invalid ||  !nuevomovesControl.value "
+        [ngClass]="{ 'disabled': nuevomovesControl.invalid || !nuevomovesControl.value}"
+      >
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -84,7 +90,10 @@
           <input matInput [formControl]="nuevospritefuntionControl" placeholder="Ej: https://..." (keyup.enter)="agregarsprite()" />
         </mat-form-field>
 
-        <button mat-icon-button type="button" class="ButonAdd"  (click)="agregarsprite()" aria-label="Agregar sprite">
+        <button mat-icon-button type="button" class="ButonAdd"  (click)="agregarsprite()" aria-label="Agregar sprite"
+        [disabled]="nuevospriteNameControl.invalid || nuevospritefuntionControl.invalid || !nuevospriteNameControl.value || !nuevospritefuntionControl.value"
+        [ngClass]="{ 'disabled': nuevospriteNameControl.invalid || nuevospritefuntionControl.invalid || !nuevospriteNameControl.value || !nuevospritefuntionControl.value}"
+        >
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -94,7 +103,7 @@
     
     <!-- Botón Guardar -->
     <div class="form-buttons">
-      <button mat-raised-button color="primary"  (click)="cancelar()" class="btn back"type="submit">atras</button>
+      <button mat-raised-button color="primary"  (click)="cancelar()" class="btn back"type="submit">Atras</button>
       <button mat-raised-button color="primary" (click)="guardar()" class="btn next" type="submit" [disabled]="pokemonForm.invalid" [ngClass]="{ 'disabled': pokemonForm.invalid}">Guardar</button>
     </div>
   </form>

@@ -24,7 +24,7 @@
              [ngClass]="colors[i % colors.length]"
              (click)="selectPokemon(item)">
              <img [src]= "item.sprites.front_default">
-          <span>#{{ currentPage * itemsPerPage + i + 1 }}</span>
+          <span>#{{ item.order }}</span>
           <p>{{ item.name }}</p>
         </div>
       </div>
@@ -37,8 +37,8 @@
 
     <div class="nav-buttons">
       <button class="btn back" (click)="prevPage()"   [ngClass]="{ 'disabled': currentPage === 0 }"[disabled]="currentPage === 0"> < Atras</button>
-      <button class="btn next"(click)="nextPage(totalItems)"    [ngClass]="{ 'disabled': (currentPage + 1) * itemsPerPage >= totalItems }"
-      [disabled]="(currentPage + 1) * itemsPerPage >= totalItems">Siguiente ></button>
+      <button class="btn next"(click)="nextPage(totalItems)"    [ngClass]="{ 'disabled': (currentPage + 1) * itemsPerPage >= totalItems || searchTerm.trim() !== ''  }"
+      [disabled]="(currentPage + 1) * itemsPerPage >= totalItems || searchTerm.trim() !== '' ">Siguiente ></button>
     </div>
   </div>
 

@@ -1,15 +1,22 @@
 import { Component, Inject } from '@angular/core';
 import { MainPageComponent } from '../main-page.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+
+function objectNotEmptyValidator(control: AbstractControl) {
+  return control.value && Object.keys(control.value).length > 0
+    ? null
+    : { emptyObject: true };
+}
 @Component({
   selector: 'app-create-objet',
   templateUrl: './create-objet.component.html',
   styleUrls: ['./create-objet.component.sass']
 })
-export class CreateObjetComponent {
 
+export class CreateObjetComponent {
+ 
   constructor(private fb: FormBuilder,
     public dialogRef: MatDialogRef<MainPageComponent>,
     @ Inject(MAT_DIALOG_DATA) public data: any) {}
@@ -27,9 +34,9 @@ export class CreateObjetComponent {
     name: ['', Validators.required],
     order:[this.data],
     urlFrist: ['', Validators.required],
-    types: this.fb.control<any[]>([], Validators.required),
+    types: this.fb.control<any>([], Validators.required),
     height: [''],
-    sprites: this.fb.control< {[key: string]: string }>({}, Validators.required),
+    sprites: this.fb.control<{ [key: string]: string }>({}, objectNotEmptyValidator),
     moves:this.fb.control<any>([], Validators.required)
   });
   nuevoTipoControl = this.fb.control('');
@@ -44,7 +51,6 @@ export class CreateObjetComponent {
     }
   }
  
-
  agregarTipo(): void {
   const value = this.nuevoTipoControl.value?.trim().toLowerCase();
   if (value && !this.tipos.includes(value)) {
@@ -71,14 +77,14 @@ agregarmov(): void {
  this.nuevomovesControl.setValue('');
 }
 
-removemov(tipo: string): void {
- const index = this.tipos.indexOf(tipo);
- if (index >= 0) {
-   this.Moves.splice(index, 1);
-   this.pokemonForm.get('moves')?.setValue(this.Moves);
- }
-}
 
+removemov(nombre: string): void {
+  const index = this.Moves.findIndex((m: any) => m.move.name === nombre);
+  if (index >= 0) {
+    this.Moves.splice(index, 1);
+    this.pokemonForm.get('moves')?.setValue(this.Moves);
+  }
+}
 
 agregarsprite(): void {
   const key = this.nuevospriteNameControl.value?.trim().toLowerCase();
